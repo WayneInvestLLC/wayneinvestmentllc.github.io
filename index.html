@@ -477,12 +477,12 @@
                         <div class="form-grid">
                             <!-- Input Name (required) -->
                             <div class="form-group">
-                                <label for="name">Name (Required)</label>
+                                <label for="name">Full Name (Required)</label>
                                 <input id="name" name="name" type="text" placeholder="Your full name" required>
                             </div>
                             <!-- Input Company -->
                             <div class="form-group">
-                                <label for="company">Company (Optional)</label>
+                                <label for="company">Company</label>
                                 <input id="company" name="company" type="text" placeholder="Developer / Sponsor name">
                             </div>
                             <!-- Input Email (required) -->
@@ -490,21 +490,21 @@
                                 <label for="email">Email (Required)</label>
                                 <input id="email" name="email" type="email" placeholder="your@company.com" required>
                             </div>
-                            <!-- Input Deal Location (required) -->
+                            <!-- Input Deal Location (optional) -->
                             <div class="form-group full">
-                                <label for="deal-location">Deal Location (Required)</label>
+                                <label for="deal-location">Deal Location</label>
                                 <input id="deal-location" name="deal_location" type="text"
-                                    placeholder="Address or market" required>
+                                    placeholder="Address or market">
                             </div>
-                            <!-- Input Capital Request -->
+                            <!-- Input Capital Request (optional) -->
                             <div class="form-group">
-                                <label for="capital-requested">Capital Requested (Optional)</label>
+                                <label for="capital-requested">Capital Requested</label>
                                 <input id="capital-requested" name="capital_requested" type="text"
                                     placeholder="e.g. $2M">
                             </div>
-                            <!-- Input Capital Structure -->
+                            <!-- Input Capital Structure (optional) -->
                             <div class="form-group">
-                                <label for="capital-structure">Capital Structure (Optional)</label>
+                                <label for="capital-structure">Capital Structure</label>
                                 <select id="capital-structure" name="capital_structure">
                                     <option value="" disabled selected>Select structure</option>
                                     <option value="LP Equity">LP Equity</option>
@@ -513,9 +513,9 @@
                                     <option value="Other / Open to Discussion">Other / Open to Discussion</option>
                                 </select>
                             </div>
-                            <!-- Input Deal Summary -->
+                            <!-- Input Deal Summary (required) -->
                             <div class="form-group full">
-                                <label for="deal-summary">Deal Summary (Optional)</label>
+                                <label for="deal-summary">Deal Summary (Required)</label>
                                 <textarea id="deal-summary" name="deal_summary"
                                     placeholder="Provide a brief overview: asset type, business plan, timeline, and why you're reaching out to Wayne Capital."
                                     required></textarea>
@@ -525,15 +525,16 @@
                                 <label for="file-input">Upload Deck / OM (Optional)</label>
                                 <div class="file-upload" onclick="document.getElementById('file-input').click()">
                                     <input type="file" id="file-input" name="attachment" style="display:none"
-                                        accept=".pdf,.ppt,.pptx,.doc,.docx">
+                                        accept=".pdf,.ppt,.pptx,.doc,.docx,.png,.jpg">
                                     <div class="file-upload-label">
-                                        <strong>Choose file</strong> or drag and drop — PDF, PPT, or DOC
+                                        <strong>Choose file</strong> or drag and drop — PDF, PPT, DOC, PNG, or JPG
                                     </div>
                                 </div>
                             </div>
                             <input type="hidden" name="_subject" value="New Deal Submission - Wayne Capital">
                             <div class="form-group full">
-                                <button type="submit" class="form-submit" id="submit-deal-btn">Submit for a Review</button>
+                                <button type="submit" class="form-submit" id="submit-deal-btn">Submit for a
+                                    Review</button>
                             </div>
                         </div>
                     </form>
