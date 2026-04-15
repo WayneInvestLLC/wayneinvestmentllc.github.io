@@ -1521,3 +1521,14 @@ footer {
     animation: fadeUp 0.7s ease both;
     animation-delay: 0.7s;
 }
+
+.form-submit.is-submitted,
+.form-submit.is-submitted:hover {
+    background: #0B1628;
+    color: #FFFFFF;
+}
+
+.form-submit:disabled {
+    cursor: default;
+    opacity: 1;
+}

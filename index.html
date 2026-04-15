@@ -473,53 +473,67 @@
                     </div>
                 </div>
                 <div>
-                    <form onsubmit="return false;">
+                    <form action="https://formspree.io/f/mlgadvwb" method="POST" enctype="multipart/form-data">
                         <div class="form-grid">
+                            <!-- Input Name (required) -->
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" placeholder="Your full name">
+                                <label for="name">Name (Required)</label>
+                                <input id="name" name="name" type="text" placeholder="Your full name" required>
                             </div>
+                            <!-- Input Company -->
                             <div class="form-group">
-                                <label>Company</label>
-                                <input type="text" placeholder="Developer / Sponsor name">
+                                <label for="company">Company (Optional)</label>
+                                <input id="company" name="company" type="text" placeholder="Developer / Sponsor name">
                             </div>
+                            <!-- Input Email (required) -->
                             <div class="form-group full">
-                                <label>Email</label>
-                                <input type="email" placeholder="your@company.com">
+                                <label for="email">Email (Required)</label>
+                                <input id="email" name="email" type="email" placeholder="your@company.com" required>
                             </div>
+                            <!-- Input Deal Location (required) -->
                             <div class="form-group full">
-                                <label>Deal Location</label>
-                                <input type="text" placeholder="Address or market">
+                                <label for="deal-location">Deal Location (Required)</label>
+                                <input id="deal-location" name="deal_location" type="text"
+                                    placeholder="Address or market" required>
                             </div>
+                            <!-- Input Capital Request -->
                             <div class="form-group">
-                                <label>Capital Requested</label>
-                                <input type="text" placeholder="e.g. $2M">
+                                <label for="capital-requested">Capital Requested (Optional)</label>
+                                <input id="capital-requested" name="capital_requested" type="text"
+                                    placeholder="e.g. $2M">
                             </div>
+                            <!-- Input Capital Structure -->
                             <div class="form-group">
-                                <label>Capital Structure</label>
-                                <select>
+                                <label for="capital-structure">Capital Structure (Optional)</label>
+                                <select id="capital-structure" name="capital_structure">
                                     <option value="" disabled selected>Select structure</option>
-                                    <option>LP Equity</option>
-                                    <option>Preferred Equity</option>
-                                    <option>Co-GP / Class B</option>
-                                    <option>Other / Open to Discussion</option>
+                                    <option value="LP Equity">LP Equity</option>
+                                    <option value="Preferred Equity">Preferred Equity</option>
+                                    <option value="Co-GP / Class B">Co-GP / Class B</option>
+                                    <option value="Other / Open to Discussion">Other / Open to Discussion</option>
                                 </select>
                             </div>
+                            <!-- Input Deal Summary -->
                             <div class="form-group full">
-                                <label>Deal Summary</label>
-                                <textarea
-                                    placeholder="Provide a brief overview: asset type, business plan, timeline, and why you're reaching out to Wayne Capital."></textarea>
+                                <label for="deal-summary">Deal Summary (Optional)</label>
+                                <textarea id="deal-summary" name="deal_summary"
+                                    placeholder="Provide a brief overview: asset type, business plan, timeline, and why you're reaching out to Wayne Capital."
+                                    required></textarea>
                             </div>
+                            <!-- Upload Deck / OM (Optional) -->
                             <div class="form-group full">
-                                <label>Upload Deck / OM (Optional)</label>
+                                <label for="file-input">Upload Deck / OM (Optional)</label>
                                 <div class="file-upload" onclick="document.getElementById('file-input').click()">
-                                    <input type="file" id="file-input" style="display:none" accept=".pdf,.pptx,.docx">
-                                    <div class="file-upload-label"><strong>Choose file</strong> or drag and drop — PDF,
-                                        PPT, or DOC</div>
+                                    <input type="file" id="file-input" name="attachment" style="display:none"
+                                        accept=".pdf,.ppt,.pptx,.doc,.docx">
+                                    <div class="file-upload-label">
+                                        <strong>Choose file</strong> or drag and drop — PDF, PPT, or DOC
+                                    </div>
                                 </div>
                             </div>
+                            <input type="hidden" name="_subject" value="New Deal Submission - Wayne Capital">
                             <div class="form-group full">
-                                <button type="submit" class="form-submit">Submit Deal for Review</button>
+                                <button type="submit" class="form-submit" id="submit-deal-btn">Submit for a Review</button>
                             </div>
                         </div>
                     </form>
@@ -720,6 +734,54 @@
                 label.innerHTML = '<strong>' + this.files[0].name + '</strong> selected';
             }
         });
+
+        const dealForm = document.querySelector('#contact form');
+        const submitDealBtn = document.getElementById('submit-deal-btn');
+        const defaultSubmitText = submitDealBtn ? submitDealBtn.textContent : '';
+
+        if (dealForm && submitDealBtn) {
+            dealForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                if (!dealForm.checkValidity()) {
+                    dealForm.reportValidity();
+                    return;
+                }
+
+                const formData = new FormData(dealForm);
+                const originalText = defaultSubmitText || 'Submit for a Review';
+
+                submitDealBtn.disabled = true;
+                submitDealBtn.textContent = 'Submitting...';
+
+                try {
+                    const response = await fetch(dealForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Submission failed');
+                    }
+
+                    dealForm.reset();
+                    const label = document.querySelector('.file-upload-label');
+                    if (label) {
+                        label.innerHTML = '<strong>Choose file</strong> or drag and drop — PDF, PPT, or DOC';
+                    }
+                    submitDealBtn.textContent = 'SUBMITTED SUCCESSFULLY';
+                    submitDealBtn.classList.add('is-submitted');
+                } catch (error) {
+                    submitDealBtn.disabled = false;
+                    submitDealBtn.textContent = originalText;
+                    alert('Submission failed. Please try again.');
+                }
+            });
+        }
+
     </script>
 
 </body>
